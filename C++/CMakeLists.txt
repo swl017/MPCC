@@ -3,7 +3,8 @@ project(MPCC)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_FLAGS "-O2")
-
+set(CMKAE_CXX_LINK_FLAGS "-lpython3.6")
+add_definitions(${CMKAE_CXX_LINK_FLAGS})
 include_directories(.)
 include_directories(External/blasfeo/lib/include)
 include_directories(External/hpipm/lib/include)
@@ -33,11 +34,13 @@ add_executable(MPCC
         MPC/mpc.cpp
         Params/track.cpp
         Params/track.h
-        Plotting/plotting.cpp
-        Plotting/plotting.h)
+        #Plotting/plotting.cpp
+        #Plotting/plotting.h
+)
 
-find_package(Python COMPONENTS Development)
-target_include_directories(MPCC PRIVATE ${Python_INCLUDE_DIRS})
+#find_package(Python COMPONENTS Development)
+find_package(PythonLibs 3.6 REQUIRED)
+target_include_directories(MPCC PRIVATE ${Python_INCLUDE_DIRS} "/usr/include/python3.6m")
 target_link_libraries(MPCC ${Python_LIBRARIES})
 
 target_link_libraries(MPCC ${CMAKE_SOURCE_DIR}/External/hpipm/lib/lib/libhpipm.a ${CMAKE_SOURCE_DIR}/External/blasfeo/lib/lib/libblasfeo.a m)
